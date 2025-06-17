@@ -1,5 +1,5 @@
 // src/pages/Login.jsx
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
     Box,
     Paper,

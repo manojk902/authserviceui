@@ -1,12 +1,10 @@
 // src/pages/Signup.jsx
 
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Box, Paper, Typography, TextField, Button, Link } from '@mui/material';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { request } from '../../utils/request'
-import apiClient from '../../utils/apiClient';
-import axios from 'axios';
 
 const Signup = () => {
     const [showPassword, setShowPassword] = useState(false);

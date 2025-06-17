@@ -1,6 +1,5 @@
 // src/pages/ResetPassword.jsx
 
-import React, { useState } from 'react';
 import { Box, Paper, Typography, TextField, Button } from '@mui/material';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';

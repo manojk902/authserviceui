@@ -1,6 +1,5 @@
 // src/pages/ForgotPassword.jsx
-import React from 'react';
-import { Box, Button, Paper, Typography, Link, TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import { Box, Button, Paper, Typography, Link, TextField, FormControl, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
 import { request } from '../../utils/request';
