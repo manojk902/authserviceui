@@ -24,17 +24,37 @@ const Login = () => {
     const id = searchParams.get('id');
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
-    // Function to handle login form submission
+
+    // Check if appName and redirectUrl are provided
+    // and store them in localStorage if they are valid
     if (appName && redirectUrl) {
-        localStorage.setItem("appName", appName)
-        localStorage.setItem("redirectUrl", redirectUrl)
-        console.log("use effect console sihnup")
+        const redirections = {
+            portfolio: ["http://localhost:3001", "http://localhost:3000","https://stage.driveosx.com"],
+            TestingSite: ["http://localhost:3001", "http://localhost:3000","https://stage.driveosx.com"],
+        }
+        if (redirections[appName]) {
+            const isValidRedirect = redirections[appName].includes(redirectUrl);
+            if (isValidRedirect) {
+                localStorage.setItem("appName", appName)
+                localStorage.setItem("redirectUrl", redirectUrl)
+                console.log("use effect console signnup")
+
+            } else {
+                console.error("Invalid redirect URL for the specified app name.");
+                return;
+            }
+        }
+        // localStorage.setItem("appName", appName)
+        // localStorage.setItem("redirectUrl", redirectUrl)
+        // console.log("use effect console sihnup")
     }
 
+    // Retrieve appName and redirectUrl from localStorage
     const getAppName = localStorage.getItem("appName");
     const getRedirectUrl = localStorage.getItem("redirectUrl");
 
     console.log("all get data login page", getAppName, getRedirectUrl)
+    // Function to handle login form submission
     const onSubmit = async (data) => {
         try {
 
@@ -45,7 +65,6 @@ const Login = () => {
                     email: data.email,
                     password: data.password,
                     app_name: getAppName,
-                    redirect_url: getRedirectUrl
                 }
             })
             console.log("Response Data:", resData);
@@ -61,7 +80,7 @@ const Login = () => {
                 } else {
                     alert(resData.message);
                     console.log("no status after Redirecting to recovery email with ID:", status, id, resData.user.id);
-                    window.location.href = (`${resData.user.redirectUrl}?token=${resData.token}`);
+                    window.location.href = (`${getRedirectUrl}?token=${resData.token}`);
                     reset();
                 }
 

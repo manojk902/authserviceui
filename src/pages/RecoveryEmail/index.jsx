@@ -2,12 +2,11 @@
 
 import React from 'react';
 import { Box, Button, Paper, TextField, Typography } from '@mui/material';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import {  useSearchParams } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { request } from '../../utils/request';
 
 const RecoveryEmail = () => {
-    const navigate = useNavigate();
     const [searchParams] = useSearchParams();
 
     const getRedirectUrl = localStorage.getItem("redirectUrl") // Default redirect URL if not set

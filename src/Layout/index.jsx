@@ -22,7 +22,7 @@ const Layout = () => {
                     style={{ width: 80 }}
                 /> */}
                 <Typography fontSize={30} fontWeight="bold" color="#4285f4" mb={1}> 
-                    AuthService
+                    DriveOSx
                 </Typography>
 
             </Box>

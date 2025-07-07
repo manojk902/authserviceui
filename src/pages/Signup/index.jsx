@@ -15,13 +15,31 @@ const Signup = () => {
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
+     // Check if appName and redirectUrl are provided
+    // and store them in localStorage if they are valid
     if (appName && redirectUrl) {
-        localStorage.setItem("appName", appName)
-        localStorage.setItem("redirectUrl", redirectUrl)
-        console.log("use effect console sihnup")
+        const redirections = {
+            portfolio: ["http://localhost:3001", "http://localhost:3000"],
+            TestingSite: ["http://localhost:3001", "http://localhost:3000"],
+        }
+        if (redirections[appName]) {
+            const isValidRedirect = redirections[appName].includes(redirectUrl);
+            if (isValidRedirect) {
+                localStorage.setItem("appName", appName)
+                localStorage.setItem("redirectUrl", redirectUrl)
+                console.log("use effect console signnup")
+
+            } else {
+                console.error("Invalid redirect URL for the specified app name.");
+                return;
+            }
+        }
+        // localStorage.setItem("appName", appName)
+        // localStorage.setItem("redirectUrl", redirectUrl)
+        // console.log("use effect console sihnup")
     }
 
-
+    // Retrieve appName and redirectUrl from localStorage
     const getAppName = localStorage.getItem("appName");
     const getRedirectUrl = localStorage.getItem("redirectUrl");
 
@@ -38,7 +56,6 @@ const Signup = () => {
                     email: data.email,
                     password: data.password,
                     appName: getAppName,
-                    redirectUrl: getRedirectUrl
                 }
             });
             console.log("Response Data:", resData);
