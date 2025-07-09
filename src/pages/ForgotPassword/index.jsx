@@ -3,6 +3,7 @@ import { Box, Button, Paper, Typography, Link, TextField, FormControl, RadioGrou
 import { useNavigate } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
 import { request } from '../../utils/request';
+import { toast } from 'react-toastify';
 
 const ForgotPassword = () => {
     const navigate = useNavigate();
@@ -23,14 +24,14 @@ const ForgotPassword = () => {
             console.log("Response Data:", resData);
             console.log("Response Data status:", resData.status);
             if (resData.status === "success") {
-                alert(resData.message);
+                toast.success(resData.message);
                 reset();
             }else if(resData.status === "error") {
-                alert(resData.message)
+                toast.error(resData.message)
                 reset();
             }
         } catch (error) {
-            alert(`${error.message}, Enter email and select correct type of email`);
+            toast.error(`${error.message}, Enter email and select correct type of email`);
             reset();
         }
         

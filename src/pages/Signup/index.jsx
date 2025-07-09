@@ -3,6 +3,7 @@ import { Box, Paper, Typography, TextField, Button, Link } from '@mui/material';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { request } from '../../utils/request';
+import { toast } from 'react-toastify';
 
 const Signup = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -26,7 +27,7 @@ const Signup = () => {
                     localStorage.setItem("redirectUrl", redirectUrl);
                     console.log("Stored redirect info in localStorage");
                 } else {
-                    alert("Invalid redirect URL for the specified app name.");
+                    toast.warn("Invalid redirect URL for the specified app name.");
                 }
             }
         }
@@ -50,20 +51,20 @@ const Signup = () => {
             });
 
             if (resData.status === "user_exists") {
-                alert(resData.message);
+                toast.warn(resData.message);
                 reset();
                 navigate(`/login`);
             } else if (resData.status === "success") {
-                alert(resData.message);
+                toast.success(resData.message);
                 reset();
                 navigate('/email-verification');
             } else {
-                alert(resData.message || "Signup failed.");
+                toast.error(resData.message || "Signup failed.");
                 reset();
             }
         } catch (error) {
             console.error("Error during signup:", error);
-            alert("An error occurred. Please try again.");
+            toast.error("An error occurred. Please try again.");
             reset();
         }
     };

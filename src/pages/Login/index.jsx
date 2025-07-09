@@ -12,6 +12,7 @@ import {
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { request } from '../../utils/request';
+import { toast } from 'react-toastify';
 
 const redirections = {
     portfolio: ["http://localhost:3001", "http://localhost:3000", "https://stage.driveosx.com"],
@@ -39,7 +40,7 @@ const Login = () => {
                 localStorage.setItem("redirectUrl", redirectUrl);
                 console.log("✅ Valid redirect saved to localStorage");
             } else {
-                alert("❌ Invalid redirect URL for the specified app name.");
+                toast.warn("Invalid redirect URL for the specified app name.");
                 localStorage.removeItem("appName");
                 localStorage.removeItem("redirectUrl");
             }
@@ -53,7 +54,7 @@ const Login = () => {
 
     const onSubmit = async (data) => {
         if (!getAppName || !getRedirectUrl || !redirections[getAppName]?.includes(getRedirectUrl)) {
-            alert("❌ Redirect configuration is invalid or missing.");
+            toast.warn("Redirect configuration is invalid or missing.");
             return;
         }
 
@@ -72,23 +73,23 @@ const Login = () => {
                 localStorage.setItem("token", resData.token);
 
                 if (status === "activation-success" && id === resData.user.id.toString()) {
-                    alert(resData.message);
+                    toast.success(resData.message);
                     navigate(`/recovery-email?id=${id}`);
                 } else {
-                    alert(resData.message);
+                    toast.success(resData.message);
                     window.location.href = `${getRedirectUrl}?token=${resData.token}`;
                     localStorage.removeItem("appName");
                     localStorage.removeItem("redirectUrl");
                 }
                 reset();
             } else {
-                alert(resData.message || "Login failed");
+                toast.error(resData.message || "Login failed");
                 reset();
             }
 
         } catch (error) {
             console.error("Error during login:", error);
-            alert("An error occurred during login. Please try again.");
+            toast.error("An error occurred during login. Please try again.");
             reset();
         }
     };

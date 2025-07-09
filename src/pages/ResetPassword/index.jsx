@@ -4,6 +4,7 @@ import { Box, Paper, Typography, TextField, Button } from '@mui/material';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { request } from '../../utils/request';
+import { toast } from 'react-toastify';
 const ResetPassword = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
@@ -22,16 +23,16 @@ const ResetPassword = () => {
             })
             console.log("Response Data:", resData);
             if (resData.status === "success") {
-                alert(resData.message);
+                toast.success(resData.message);
                 reset();
                 navigate('/login');
             }else{
-                alert(resData.message);
+                toast.error(resData.message);
                 reset();
                 navigate('/forgot-password');
             }
         } catch (error) {
-            alert("Error during resetting password:", error);
+            toast.error("Error during resetting password:", error);
             reset();
         }
 

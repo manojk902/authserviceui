@@ -5,6 +5,7 @@ import { Box, Button, Paper, TextField, Typography } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { request } from '../../utils/request';
+import { toast } from 'react-toastify';
 
 const RecoveryEmail = () => {
     const [searchParams] = useSearchParams();
@@ -34,17 +35,19 @@ const RecoveryEmail = () => {
             console.log("Response Data:", resData);
             console.log("Response Data status:", resData.status);
             if (resData.status === "success") {
-                alert(resData.message);
+                toast.success(resData.message);
                 window.location.href = `${getRedirectUrl}?token${token}`;
                 localStorage.removeItem("appName");
                 localStorage.removeItem("redirectUrl");
                 reset();
             } else {
                 console.error("Failed to add recovery email:", resData.message);
+                toast.error(resData.message);
                 reset();
             }
         } catch (error) {
             console.log("Error during adding recovery email:", error);
+            toast.error('Error during adding recovery email');
             reset();
         }
         console.log('Recovery email added successfully!', data); // Placeholder for actual logic
