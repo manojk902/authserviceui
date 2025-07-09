@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Box, Button, Paper, TextField, Typography } from '@mui/material';
-import {  useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { request } from '../../utils/request';
 
@@ -10,9 +10,10 @@ const RecoveryEmail = () => {
     const [searchParams] = useSearchParams();
 
     const getRedirectUrl = localStorage.getItem("redirectUrl") // Default redirect URL if not set
-    console.log("get all data recovery email->",getRedirectUrl)
+    console.log("get all data recovery email->", getRedirectUrl)
     const token = localStorage.getItem("token"); // Get token from local storage
     console.log("Local storage Redirect URL:", getRedirectUrl);
+    console.log("RECOVERY Reditect url:", getRedirectUrl);
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     // Function to handle adding recovery email
@@ -34,7 +35,9 @@ const RecoveryEmail = () => {
             console.log("Response Data status:", resData.status);
             if (resData.status === "success") {
                 alert(resData.message);
-                window.location.href= `${getRedirectUrl}?token${token}`;
+                window.location.href = `${getRedirectUrl}?token${token}`;
+                localStorage.removeItem("appName");
+                localStorage.removeItem("redirectUrl");
                 reset();
             } else {
                 console.error("Failed to add recovery email:", resData.message);

@@ -1,5 +1,4 @@
-// src/pages/Login.jsx
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     Box,
     Paper,
@@ -14,50 +13,51 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { request } from '../../utils/request';
 
+const redirections = {
+    portfolio: ["http://localhost:3001", "http://localhost:3000", "https://stage.driveosx.com"],
+    testingsite: ["http://localhost:3001", "http://localhost:3000", "https://stage.driveosx.com"],
+};
+
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+
     const appName = searchParams.get('appName');
     const redirectUrl = searchParams.get('redirectUrl');
     const status = searchParams.get('status');
     const id = searchParams.get('id');
-    const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
+    // Validate and store appName and redirectUrl on mount
+    useEffect(() => {
+        if (appName && redirectUrl) {
+            const isValidRedirect = redirections[appName]?.includes(redirectUrl);
 
-    // Check if appName and redirectUrl are provided
-    // and store them in localStorage if they are valid
-    if (appName && redirectUrl) {
-        const redirections = {
-            portfolio: ["http://localhost:3001", "http://localhost:3000","https://stage.driveosx.com"],
-            TestingSite: ["http://localhost:3001", "http://localhost:3000","https://stage.driveosx.com"],
-        }
-        if (redirections[appName]) {
-            const isValidRedirect = redirections[appName].includes(redirectUrl);
             if (isValidRedirect) {
-                localStorage.setItem("appName", appName)
-                localStorage.setItem("redirectUrl", redirectUrl)
-                console.log("use effect console signnup")
-
+                localStorage.setItem("appName", appName);
+                localStorage.setItem("redirectUrl", redirectUrl);
+                console.log("✅ Valid redirect saved to localStorage");
             } else {
-                console.error("Invalid redirect URL for the specified app name.");
-                return;
+                alert("❌ Invalid redirect URL for the specified app name.");
+                localStorage.removeItem("appName");
+                localStorage.removeItem("redirectUrl");
             }
         }
-        // localStorage.setItem("appName", appName)
-        // localStorage.setItem("redirectUrl", redirectUrl)
-        // console.log("use effect console sihnup")
-    }
+    }, [appName, redirectUrl]);
 
-    // Retrieve appName and redirectUrl from localStorage
     const getAppName = localStorage.getItem("appName");
     const getRedirectUrl = localStorage.getItem("redirectUrl");
 
-    console.log("all get data login page", getAppName, getRedirectUrl)
-    // Function to handle login form submission
-    const onSubmit = async (data) => {
-        try {
+    console.log("LOGIN Reditect url:", getRedirectUrl);
 
+    const onSubmit = async (data) => {
+        if (!getAppName || !getRedirectUrl || !redirections[getAppName]?.includes(getRedirectUrl)) {
+            alert("❌ Redirect configuration is invalid or missing.");
+            return;
+        }
+
+        try {
             const resData = await request({
                 method: "post",
                 url: "login",
@@ -66,72 +66,52 @@ const Login = () => {
                     password: data.password,
                     app_name: getAppName,
                 }
-            })
-            console.log("Response Data:", resData);
+            });
+
             if (resData.status === "success") {
                 localStorage.setItem("token", resData.token);
-                console.log("before Redirecting to recovery email with ID:", typeof (status), typeof (id), typeof (Number(resData.user.id)));
 
                 if (status === "activation-success" && id === resData.user.id.toString()) {
                     alert(resData.message);
-                    console.log("with status after Redirecting to recovery email with ID:", status, id, resData.user.id);
                     navigate(`/recovery-email?id=${id}`);
-                    reset();
                 } else {
                     alert(resData.message);
-                    console.log("no status after Redirecting to recovery email with ID:", status, id, resData.user.id);
-                    window.location.href = (`${getRedirectUrl}?token=${resData.token}`);
-                    reset();
+                    window.location.href = `${getRedirectUrl}?token=${resData.token}`;
+                    localStorage.removeItem("appName");
+                    localStorage.removeItem("redirectUrl");
                 }
-
-            } else if (resData.status === "user_not_found") {
-                alert(resData.message);
                 reset();
-            } else if (resData.status === "fill_all_feilds") {
-                alert(resData.message)
-                reset();
-            } else if (resData.status === "account_locked") {
-                alert(resData.message);
-                reset();
-            } else if (resData.status === "invalid_password") {
-                alert(resData.message);
-                reset();
-            } else if (resData.status === "user_suspended") {
-                alert(resData.message);
-                reset();
-            } else if (resData.status === "user_deactivated") {
-                alert(resData.message);
-                reset();
-            } else if (resData.status === "user_deleted") {
-                alert(resData.message);
-                reset();
-            } else if (resData.status === "user_not_verified") {
-                alert(resData.message);
+            } else {
+                alert(resData.message || "Login failed");
                 reset();
             }
+
         } catch (error) {
             console.error("Error during login:", error);
             alert("An error occurred during login. Please try again.");
             reset();
         }
-    }
+    };
 
     return (
-
         <Paper elevation={3} sx={{ p: 4, width: 400, borderRadius: 2 }}>
-            <Typography variant="h5" fontWeight="bold" mb={2}>
-                Log In
-            </Typography>
+            <Typography variant="h5" fontWeight="bold" mb={2}>Log In</Typography>
 
-            <Box component="form" fullWidth onSubmit={handleSubmit(onSubmit)} sx={{ display: 'flex', flexDirection: 'column' }}>
+            <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ display: 'flex', flexDirection: 'column' }}>
                 <TextField
                     fullWidth
-                    label="Email "
+                    label="Email"
                     variant="standard"
                     margin="normal"
-                    {...register("email", { required: "Email is required", pattern: { value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/, message: "Enter a valid email address" } })}
+                    {...register("email", {
+                        required: "Email is required",
+                        pattern: {
+                            value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                            message: "Enter a valid email address"
+                        }
+                    })}
                     error={!!errors.email}
-                    helperText={errors.email ? errors.email.message : ''}
+                    helperText={errors.email?.message}
                 />
 
                 <TextField
@@ -140,9 +120,12 @@ const Login = () => {
                     variant="standard"
                     margin="normal"
                     type={showPassword ? 'text' : 'password'}
-                    {...register("password", { required: "Password is required", minLength: { value: 6, message: "Password must be at least 6 characters" } })}
+                    {...register("password", {
+                        required: "Password is required",
+                        minLength: { value: 6, message: "Password must be at least 6 characters" }
+                    })}
                     error={!!errors.password}
-                    helperText={errors.password ? errors.password.message : ''}
+                    helperText={errors.password?.message}
                 />
 
                 <FormControlLabel
