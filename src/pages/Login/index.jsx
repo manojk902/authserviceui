@@ -33,11 +33,14 @@ const Login = () => {
     // Validate and store appName and redirectUrl on mount
     useEffect(() => {
         if (appName && redirectUrl) {
-            const isValidRedirect = redirections[appName]?.includes(redirectUrl);
+            const normalizeUrl = (url) => url.replace(/\/+$/, ''); // removes all trailing slashes
+            const normalizedRedirect = normalizeUrl(redirectUrl);
+
+            const isValidRedirect = redirections[appName]?.includes(normalizedRedirect);
 
             if (isValidRedirect) {
                 localStorage.setItem("appName", appName);
-                localStorage.setItem("redirectUrl", redirectUrl);
+                localStorage.setItem("redirectUrl", normalizedRedirect);
                 console.log("✅ Valid redirect saved to localStorage");
             } else {
                 toast.warn("Invalid redirect URL for the specified app name.");

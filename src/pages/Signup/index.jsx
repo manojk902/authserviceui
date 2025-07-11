@@ -16,15 +16,19 @@ const Signup = () => {
 
     useEffect(() => {
         if (appName && redirectUrl) {
+            const normalizeUrl = (url) => url.replace(/\/+$/, ''); // removes all trailing slashes
+            const normalizedRedirect = normalizeUrl(redirectUrl);
+
             const redirections = {
                 portfolio: ["http://localhost:3001", "http://localhost:3000", "https://stage.driveosx.com"],
                 testingsite: ["http://localhost:3001", "http://localhost:3000", "https://stage.driveosx.com"],
             };
             if (redirections[appName]) {
-                const isValidRedirect = redirections[appName].includes(redirectUrl);
+
+                const isValidRedirect = redirections[appName].includes(normalizedRedirect);
                 if (isValidRedirect) {
                     localStorage.setItem("appName", appName);
-                    localStorage.setItem("redirectUrl", redirectUrl);
+                    localStorage.setItem("redirectUrl", normalizedRedirect);
                     console.log("Stored redirect info in localStorage");
                 } else {
                     toast.warn("Invalid redirect URL for the specified app name.");
