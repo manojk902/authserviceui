@@ -1,5 +1,5 @@
 
-import {  Paper, Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -13,9 +13,7 @@ const EmailVerification = () => {
     if (status === 'success' && id) {
       navigate(`/recovery-email?id=${id}`);
     }
-  },[status,id, navigate])
-
-
+  }, [status, id, navigate])
 
   return (
 
@@ -26,9 +24,6 @@ const EmailVerification = () => {
       <Typography variant="body2" mb={3}>
         Please check your email and click on a verification link to complete the sign-up process.
       </Typography>
-
-      {/* ✅ Optional manual button */}
-
     </Paper>
   );
 }
