@@ -3,8 +3,8 @@ import Header from "./components/compound/Header";
 import WelcomeSection from "./components/compound/WelcomeSection";
 import BasicInfo from "./components/compound/BasicInfo";
 import ContactInfo from "./components/compound/ContactInfo";
-import AddressInfo from "./components/compound/AddressInfo";
 import SecurityInfo from "./components/compound/SecurityInfo";
+import SaveChanges from "./components/molecule/SaveChanges";
 // import { Component } from "react";
 
 const Accounts = () => {
@@ -15,8 +15,8 @@ const Accounts = () => {
                 <WelcomeSection />
                 <BasicInfo />
                 <ContactInfo />
-                <AddressInfo />
                 <SecurityInfo />
+                <SaveChanges/>
             </Container>
 
         </>
