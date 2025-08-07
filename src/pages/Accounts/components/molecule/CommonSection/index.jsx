@@ -2,7 +2,7 @@ import { Box, Table, TableBody, TableRow, Typography } from "@mui/material";
 
 const CommonSection = ({ title, rows }) => {
     return (
-        <Box elevation={2} gap={3} sx={{ display: "flex", flexDirection: "column", justifyContent: "start", alignItems: "start", py: "2vw", px: "2vw", boxShadow: 2, borderRadius: ".5vw" }}>
+        <Box elevation={2} gap={3} sx={{ display: "flex", flexDirection: "column", justifyContent: "start", alignItems: "start", py: "2vw", px: "2vw", boxShadow: 2, borderRadius: ".8vw" }}>
             <Box><Typography variant="h4" fontSize="2vw">{title}</Typography></Box>
             <Table sx={{}} aria-label="simple table">
 
