@@ -1,3 +1,4 @@
+
 import { Box, Button, Typography } from "@mui/material";
 import ProfileImg from '../../../../../assets/img/profile.webp'
 import PermMediaIcon from '@mui/icons-material/PermMedia';
@@ -21,7 +22,7 @@ const WelcomeSection = () => {
                     <input type="file" accept="image/*" hidden  onChange={handleImageChange}/>
                 </Button>
             </Box>
-            <Box><Typography variant="h3" fontSize="2.5vw">Welcome, Mukesh Kumar</Typography></Box>
+            <Box><Typography variant="h3" fontSize="2.5vw">Welcome, {user.firstName} {user.lastName}</Typography></Box>
             <Box><Typography variant="p" fontSize="1.8">Manage your info and security to make DriveOSx work better for you.</Typography></Box>
         </Box>
     )
