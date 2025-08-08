@@ -4,8 +4,10 @@ import ProfileImg from '../../../../../assets/img/profile.webp'
 import PermMediaIcon from '@mui/icons-material/PermMedia';
 import styles from './WelcomeSection.module.css';
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const WelcomeSection = () => {
+    const user = useSelector((state) => state.user.userData);
     const [previewImg, setPreviewImg] = useState(ProfileImg);
     const handleImageChange =(e)=>{
         const file = e.target.files?.[0];
