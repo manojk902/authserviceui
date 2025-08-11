@@ -8,10 +8,10 @@ const userSlice = createSlice({
     name: 'user',
     initialState: {
         userData: {
-            userName: "Mukesh_000",
+            userName: "Mukesh_111",
             firstName: "Mukesh",
             lastName: "Kumar",
-            email: "mk@example.com",
+            email: "mkmk@example.com",
             phoneNumber: "1234567890",
             recoveryEmail: "recoveryEmail@example.com"
         },

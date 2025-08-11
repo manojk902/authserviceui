@@ -7,11 +7,11 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 
 const WelcomeSection = () => {
-    const user = useSelector((state) => state.user.userData);
+    const user = useSelector((state) => state.user?.userData);
     const [previewImg, setPreviewImg] = useState(ProfileImg);
-    const handleImageChange =(e)=>{
+    const handleImageChange = (e) => {
         const file = e.target.files?.[0];
-        if(file){
+        if (file) {
             setPreviewImg(URL.createObjectURL(file));
         }
     }
@@ -19,9 +19,9 @@ const WelcomeSection = () => {
         <Box gap={3} sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", py: "4vw" }}>
             <Box className={styles.imageContainer}>
                 <Box component="img" sx={{ width: "100%" }} src={previewImg} alt="profile img" />
-                <Button component="label" className={styles.imageSelectorBtn} > 
-                    <PermMediaIcon sx={{p:".6vw", fontSize:"3vw",borderRadius:".8vw", backgroundColor:"black", color:"white"}}/>
-                    <input type="file" accept="image/*" hidden  onChange={handleImageChange}/>
+                <Button component="label" className={styles.imageSelectorBtn} >
+                    <PermMediaIcon sx={{ p: ".6vw", fontSize: "3vw", borderRadius: ".8vw", backgroundColor: "#4285f4", color: "white" }} />
+                    <input type="file" accept="image/*" hidden onChange={handleImageChange} />
                 </Button>
             </Box>
             <Box><Typography variant="h3" fontSize="2.5vw">Welcome, {user.firstName} {user.lastName}</Typography></Box>
