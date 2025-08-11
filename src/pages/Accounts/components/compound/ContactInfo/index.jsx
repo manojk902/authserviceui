@@ -1,8 +1,16 @@
 import CommonSection from "../../molecule/CommonSection";
+import { useSelector } from "react-redux";
 
-const ContactInfo = () => {
+const ContactInfo = ({ isEditable, setIsEditable }) => {
+    const user = useSelector((state) => state.user?.userData);
+    const userInfo = useSelector((state) => state.userInfo?.userInfoData);
     return (
-        <CommonSection title="Contact Info" rows={[{ label: "Email", value: "mk@example.com" }, { label: "Phone", value: "0000000000" },{ label: "Home", value: "Home address" },{ label: "Work", value: "Work Address" }]} />
+        <CommonSection
+            title="Contact Info"
+            isEditable={isEditable}
+            setIsEditable={setIsEditable}
+            rows={[{ label: "Email", isInput:true, type:"email", value: `${user.email}` }, { label: "Phone", type:"tel",isInput:true, value: `${user.phoneNumber}` }, { label: "Home", type:"text",isInput:true, value: `${userInfo.home_address}` }, { label: "Work", type:"text", isInput:true, value: `${userInfo.work_address}` }]}
+        />
     )
 }
 export default ContactInfo;

@@ -4,19 +4,33 @@ import WelcomeSection from "./components/compound/WelcomeSection";
 import BasicInfo from "./components/compound/BasicInfo";
 import ContactInfo from "./components/compound/ContactInfo";
 import SecurityInfo from "./components/compound/SecurityInfo";
-import SaveChanges from "./components/molecule/SaveChanges";
+import { useState } from "react";
 // import { Component } from "react";
 
 const Accounts = () => {
+    const [isEditable, setIsEditable] = useState({
+        basicInfo: false,
+        contactInfo: false,
+        securityInfo: false
+    });
+
+    // toggle specific section
+    const toggleEdit = (section) => {
+        setIsEditable((prev) => ({
+            ...prev,
+            [section]: !prev[section]
+        }))
+    }
+
+
     return (
         <>
             <Header />
             <Container maxWidth="md" sx={{ display: "flex", flexDirection: "column", gap: 6, py: 4 }}>
                 <WelcomeSection />
-                <BasicInfo />
-                <ContactInfo />
-                <SecurityInfo />
-                <SaveChanges/>
+                <BasicInfo isEditable={isEditable.basicInfo} setIsEditable={() => toggleEdit("basicInfo")} />
+                <ContactInfo isEditable={isEditable.contactInfo} setIsEditable={() => toggleEdit("contactInfo")} />
+                <SecurityInfo isEditable={isEditable.securityInfo} setIsEditable={() => toggleEdit("securityInfo")} />
             </Container>
 
         </>

@@ -17,5 +17,5 @@
 
 .imageContainer:hover .imageSelectorBtn {
   opacity: 1;
-  transition: all .6s ease;
+  transition: all .4s ease;
 }
