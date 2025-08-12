@@ -21,7 +21,6 @@ const ResetPassword = () => {
                     newPassword: data.newPassword
                 }
             })
-            console.log("Response Data:", resData);
             if (resData.status === "success") {
                 toast.success(resData.message);
                 reset();

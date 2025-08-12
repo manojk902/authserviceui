@@ -10,9 +10,7 @@ const ForgotPassword = () => {
     const { register, handleSubmit, formState: { errors }, reset, control } = useForm();
     // Function to handle adding recovery email
     const onSubmit = async (data) => {
-
         try {
-
             const resData = await request({
                 method: "post",
                 url: "forgot-password",
@@ -21,12 +19,10 @@ const ForgotPassword = () => {
                     useRecoveryEmail: data.isRecovery
                 }
             })
-            console.log("Response Data:", resData);
-            console.log("Response Data status:", resData.status);
             if (resData.status === "success") {
                 toast.success(resData.message);
                 reset();
-            }else if(resData.status === "error") {
+            } else if (resData.status === "error") {
                 toast.error(resData.message)
                 reset();
             }
@@ -34,11 +30,9 @@ const ForgotPassword = () => {
             toast.error(`${error.message}, Enter email and select correct type of email`);
             reset();
         }
-        
     }
 
     return (
-
         <Paper elevation={3} sx={{ p: 4, width: 400, borderRadius: 2, textAlign: 'center' }}>
             <Typography variant="h5" fontWeight="bold" gutterBottom>
                 Forgot Password

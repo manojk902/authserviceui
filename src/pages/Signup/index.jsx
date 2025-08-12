@@ -29,7 +29,6 @@ const Signup = () => {
                 if (isValidRedirect) {
                     localStorage.setItem("appName", appName);
                     localStorage.setItem("redirectUrl", normalizedRedirect);
-                    console.log("Stored redirect info in localStorage");
                 } else {
                     toast.warn("Invalid redirect URL for the specified app name.");
                 }

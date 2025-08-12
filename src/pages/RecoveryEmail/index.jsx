@@ -11,10 +11,7 @@ const RecoveryEmail = () => {
     const [searchParams] = useSearchParams();
 
     const getRedirectUrl = localStorage.getItem("redirectUrl") // Default redirect URL if not set
-    console.log("get all data recovery email->", getRedirectUrl)
     const token = localStorage.getItem("token"); // Get token from local storage
-    console.log("Local storage Redirect URL:", getRedirectUrl);
-    console.log("RECOVERY Reditect url:", getRedirectUrl);
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     // Function to handle adding recovery email
@@ -32,8 +29,6 @@ const RecoveryEmail = () => {
                     recoveryEmail: data.recoveryEmail
                 }
             })
-            console.log("Response Data:", resData);
-            console.log("Response Data status:", resData.status);
             if (resData.status === "success") {
                 toast.success(resData.message);
                 window.location.href = `${getRedirectUrl}?token${token}`;
@@ -46,11 +41,9 @@ const RecoveryEmail = () => {
                 reset();
             }
         } catch (error) {
-            console.log("Error during adding recovery email:", error);
             toast.error('Error during adding recovery email');
             reset();
         }
-        console.log('Recovery email added successfully!', data); // Placeholder for actual logic
         reset();
     }
 

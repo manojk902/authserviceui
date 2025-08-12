@@ -6,7 +6,7 @@ export const request = async ({ method, url, data = {}, params = {}, headers = {
     try {
         const response = await apiClient({
             method,
-            url,       // e.g., "signup" or "login"
+            url,       
             data,
             params,
             headers,
