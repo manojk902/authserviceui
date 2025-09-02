@@ -12,8 +12,9 @@ const NavRoutes = () => {
     return (
         <Router>
             <Routes>
-                <Route path='/' element={<Accounts />} />
+                <Route path='/account' element={<Accounts />} />
                 <Route path="/" element={<Layout />} >
+                    <Route index element={<Login />} />
                     <Route path="Login" element={<Login />} />
                     <Route path="signup" element={<Signup />} />
                     <Route path="forgot-password" element={<ForgotPassword />} />
