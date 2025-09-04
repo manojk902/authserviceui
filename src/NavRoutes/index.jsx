@@ -7,12 +7,13 @@ import RecoveryEmail from "../pages/RecoveryEmail";
 import EmailVerification from "../pages/EmailVerification";
 import Layout from '../Layout';
 import Accounts from '../pages/Accounts';
+import ProtectedRoute from "../components/ProtectedRoute";
 
 const NavRoutes = () => {
     return (
         <Router>
             <Routes>
-                <Route path='/account' element={<Accounts />} />
+                <Route path='/account' element={<ProtectedRoute><Accounts /></ProtectedRoute>} />
                 <Route path="/" element={<Layout />} >
                     <Route index element={<Login />} />
                     <Route path="Login" element={<Login />} />

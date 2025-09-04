@@ -8,6 +8,7 @@ import { useState } from "react";
 // import { Component } from "react";
 
 const Accounts = () => {
+   
     const [isEditable, setIsEditable] = useState({
         basicInfo: false,
         contactInfo: false,

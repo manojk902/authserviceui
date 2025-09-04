@@ -33,15 +33,20 @@ const Login = () => {
     // Validate and store appName and redirectUrl on mount
     useEffect(() => {
         if (appName && redirectUrl) {
-            const normalizeUrl = (url) => url.replace(/\/+$/, ''); // removes all trailing slashes
+            const normalizeUrl = (url) => url.replace(/\/+$/, ""); // removes trailing slashes
             const normalizedRedirect = normalizeUrl(redirectUrl);
 
-            const isValidRedirect = redirections[appName]?.includes(normalizedRedirect);
+            const appRedirections = redirections[appName]; // could be undefined
+            const isValidRedirect = appRedirections?.includes(normalizedRedirect);
 
             if (isValidRedirect) {
                 localStorage.setItem("appName", appName);
                 localStorage.setItem("redirectUrl", normalizedRedirect);
-                console.log("✅ Valid redirect saved to localStorage");
+                console.log("Valid redirect saved to localStorage");
+            } else if (appRedirections && appRedirections[0]) {
+                localStorage.setItem("appName", appName);
+                localStorage.setItem("redirectUrl", appRedirections[0]);
+                console.log("Fallback redirect saved to localStorage");
             } else {
                 toast.warn("Invalid redirect URL for the specified app name.");
                 localStorage.removeItem("appName");
@@ -50,16 +55,17 @@ const Login = () => {
         }
     }, [appName, redirectUrl]);
 
+
     const getAppName = localStorage.getItem("appName");
     const getRedirectUrl = localStorage.getItem("redirectUrl");
 
     console.log("LOGIN Reditect url:", getRedirectUrl);
 
     const onSubmit = async (data) => {
-        if (!getAppName || !getRedirectUrl || !redirections[getAppName]?.includes(getRedirectUrl)) {
-            toast.warn("Redirect configuration is invalid or missing.");
-            return;
-        }
+        // if (!getAppName || !getRedirectUrl || !redirections[getAppName]?.includes(getRedirectUrl)) {
+        //     toast.warn("Redirect configuration is invalid or missing.");
+        //     // <Navigate to="/account" />
+        // }
 
         try {
             const resData = await request({
@@ -80,9 +86,14 @@ const Login = () => {
                     navigate(`/recovery-email?id=${id}`);
                 } else {
                     toast.success(resData.message);
-                    window.location.href = `${getRedirectUrl}?token=${resData.token}`;
-                    localStorage.removeItem("appName");
-                    localStorage.removeItem("redirectUrl");
+                    if (!getRedirectUrl) {
+                        navigate(`/account`)
+                    } else {
+                        window.location.href = `${getRedirectUrl}?token=${resData.token}`;
+                        localStorage.removeItem("appName");
+                        localStorage.removeItem("redirectUrl");
+                    }
+
                 }
                 reset();
             } else {
