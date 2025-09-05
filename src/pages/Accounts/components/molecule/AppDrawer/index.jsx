@@ -1,20 +1,13 @@
-import { AccountCircle, Cloud, Mail, Map, SmartToy, YouTube } from '@mui/icons-material';
+import { AccountCircle } from '@mui/icons-material';
 import { Box, Grid, Popover, Typography } from '@mui/material'
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 const AppDrawer = ({ open, anchorEl, handleClose, handleAppClick }) => {
+    const token = localStorage.getItem("token")
     const apps = [
-        { name: 'Account', icon: <AccountCircle />, color: '#5f6368' },
-        { name: 'Drive', icon: <Cloud />, color: '#4285f4' },
-        { name: 'Gmail', icon: <Mail />, color: '#ea4335' },
-        { name: 'YouTube', icon: <YouTube />, color: '#f44336' },
-        { name: 'Gemini', icon: <SmartToy />, color: '#9c27b0' },
-        { name: 'Maps', icon: <Map />, color: '#34a853' },
-        { name: 'Maps', icon: <Map />, color: '#34a853' },
-        { name: 'Maps', icon: <Map />, color: '#34a853' },
-        { name: 'Maps', icon: <Map />, color: '#34a853' },
-        { name: 'Maps', icon: <Map />, color: '#34a853' },
-        { name: 'Maps', icon: <Map />, color: '#34a853' },
+        { name: 'Portfolio', icon: <AccountCircle />, img: "https://cdn-icons-png.freepik.com/512/9537/9537722.png", color: '#5f6368', url: "https://stage.driveosx.com/" },
+        { name: 'Portfolio', icon: <AccountCircle />, img: "https://cdn-icons-png.freepik.com/512/9537/9537722.png", color: '#5f6368', url: "http://localhost:3001/" },
     ];
     return (
         <Popover
@@ -53,13 +46,16 @@ const AppDrawer = ({ open, anchorEl, handleClose, handleAppClick }) => {
                 justifyContent: 'center',
                 maxHeight: '45vh',
                 overflowY: 'auto',
-                backgroundColor:"#fff",
-                padding:".2vw 0vw",
+                backgroundColor: "#fff",
+                padding: ".2vw 0vw",
                 borderRadius: '.8vw',
             }}>
                 {apps.map((app, index) => (
                     <Grid item xs={4} key={index}>
                         <Box
+                            component={Link}
+                            to={`${app.url}?token=${token}`}
+                            target='_blank'
                             sx={{
                                 display: 'flex',
                                 flexDirection: 'column',
@@ -67,6 +63,7 @@ const AppDrawer = ({ open, anchorEl, handleClose, handleAppClick }) => {
                                 padding: '10px 12px',
                                 borderRadius: '4px',
                                 cursor: 'pointer',
+                                textDecoration: "none",
                                 transition: 'background-color 0.2s',
                                 '&:hover': {
                                     backgroundColor: '#f1f3f4',
@@ -83,12 +80,22 @@ const AppDrawer = ({ open, anchorEl, handleClose, handleAppClick }) => {
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    backgroundColor: app.color,
+                                    // backgroundColor: app.color,
                                     color: 'white',
                                     marginBottom: '8px'
                                 }}
                             >
-                                {React.cloneElement(app.icon, { sx: { fontSize: '30px' } })}
+                                {/* {React.cloneElement(app.icon, { sx: { fontSize: '30px' } })} */}
+                                <Box
+                                    component="img"
+                                    src={app.img}
+                                    alt="Logo-img"
+                                    sx={{
+                                        width: '100%',
+                                        height: '100%',
+                                        objectFit: "cover",
+                                    }}
+                                />
                             </Box>
                             <Typography
                                 variant="body2"

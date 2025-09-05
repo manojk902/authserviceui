@@ -15,7 +15,6 @@ const CommonSection = ({ title, rows, isEditable, setIsEditable }) => {
     }
 
     const saveChanges = () => {
-        console.log(`Changes saved for ${title}:`, localRows);
         setIsEditable({
             basicInfo: false,
             contactInfo: false,

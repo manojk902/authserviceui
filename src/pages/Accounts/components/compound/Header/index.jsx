@@ -24,7 +24,6 @@ export default function Header() {
     };
 
     const handleAppClick = (appName) => {
-        console.log(`${appName} clicked`);
         handleClose();
     };
 
@@ -39,7 +38,7 @@ export default function Header() {
                     <Typography sx={{ flexGrow: 1, }}
                     >
                         <Typography component={Link}
-                            to="/" sx={{
+                            to="/account" sx={{
                                 color: "#4285f4",
                                 textDecoration: "none",
                                 fontWeight: "bold",
