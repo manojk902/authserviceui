@@ -21,8 +21,6 @@ const ForgotPassword = () => {
                     useRecoveryEmail: data.isRecovery
                 }
             })
-            console.log("Response Data:", resData);
-            console.log("Response Data status:", resData.status);
             if (resData.status === "success") {
                 toast.success(resData.message);
                 reset();

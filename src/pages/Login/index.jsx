@@ -42,11 +42,9 @@ const Login = () => {
             if (isValidRedirect) {
                 localStorage.setItem("appName", appName);
                 localStorage.setItem("redirectUrl", normalizedRedirect);
-                console.log("Valid redirect saved to localStorage");
             } else if (appRedirections && appRedirections[0]) {
                 localStorage.setItem("appName", appName);
                 localStorage.setItem("redirectUrl", appRedirections[0]);
-                console.log("Fallback redirect saved to localStorage");
             } else {
                 toast.warn("Invalid redirect URL for the specified app name.");
                 localStorage.removeItem("appName");
@@ -59,7 +57,6 @@ const Login = () => {
     const getAppName = localStorage.getItem("appName");
     const getRedirectUrl = localStorage.getItem("redirectUrl");
 
-    console.log("LOGIN Reditect url:", getRedirectUrl);
 
     const onSubmit = async (data) => {
         // if (!getAppName || !getRedirectUrl || !redirections[getAppName]?.includes(getRedirectUrl)) {

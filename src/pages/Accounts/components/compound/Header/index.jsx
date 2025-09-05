@@ -24,7 +24,6 @@ export default function Header() {
     };
 
     const handleAppClick = (appName) => {
-        console.log(`${appName} clicked`);
         handleClose();
     };
 
