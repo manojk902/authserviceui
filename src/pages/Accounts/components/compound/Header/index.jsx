@@ -10,6 +10,7 @@ import {
 
 import { Link } from 'react-router-dom';
 import AppDrawer from '../../molecule/AppDrawer';
+import ProfileIcon from '../../molecule/ProfileIcon';
 
 export default function Header() {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -54,12 +55,14 @@ export default function Header() {
                             color: '#4285f4',
                             padding: '.5vw',
                             '&:hover': {
-                                backgroundColor: '4285f4'
+                                backgroundColor: '#4285f4',
+                                color: '#fff',
                             }
                         }}
                     >
                         <AppsRoundedIcon sx={{ fontSize: '2vw' }} />
                     </IconButton>
+                    <ProfileIcon/>
                 </Toolbar>
                 <AppDrawer open={open} anchorEl={anchorEl} handleClose={handleClose} handleAppClick={handleAppClick}/>
             </AppBar>
