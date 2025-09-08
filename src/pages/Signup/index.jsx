@@ -20,8 +20,8 @@ const Signup = () => {
             const normalizedRedirect = normalizeUrl(redirectUrl);
 
             const redirections = {
-                portfolio: ["http://localhost:3001", "http://localhost:3000", "https://stage.driveosx.com"],
-                testingsite: ["http://localhost:3001", "http://localhost:3000", "https://stage.driveosx.com"],
+                portfolio: ["http://localhost:3001", "http://localhost:3003","http://localhost:3004", "http://localhost:3000", "https://stage.driveosx.com"],
+                testingsite: ["http://localhost:3001", "http://localhost:3003","http://localhost:3004", "http://localhost:3000", "https://stage.driveosx.com"],
             };
             if (redirections[appName]) {
 

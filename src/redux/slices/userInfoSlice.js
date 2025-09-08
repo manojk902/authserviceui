@@ -1,7 +1,22 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { request } from "../../utils/request";
 
 export const fetchUserInfoData = createAsyncThunk('userInfo/fetchUserInfoData', async (userId) => {
-    console.log("Fetching user info data for userId:", userId);
+    try {
+        const numericUserId = Number(userId);
+        const res =await request({
+            url: `/get-user-info/${numericUserId}`,
+            method: 'get',
+        });
+        if(res.status === "success"){
+            console.log("Fetched user info data:", res.user);
+            return res.user;
+        }
+        return "Something went wrong, not fetched data";
+    } catch (error) {
+        console.error("Error fetching user info data:", error);
+        throw error;
+    }
 })
 
 const userInfoSlice = createSlice({

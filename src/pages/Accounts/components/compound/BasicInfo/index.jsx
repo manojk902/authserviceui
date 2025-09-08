@@ -1,15 +1,13 @@
 import CommonSection from "../../molecule/CommonSection";
-import { useSelector } from "react-redux";
 
-const BasicInfo = ({ isEditable, setIsEditable }) => {
-    const user = useSelector((state) => state.user?.userData);
-    const userInfo = useSelector((state) => state.userInfo?.userInfoData);
+const BasicInfo = ({userName, firstName, lastName, dob, gender, isEditable, setIsEditable }) => {
+    console.log("BasicInfo props:", {userName, firstName, lastName, dob, gender});
     return (
         <CommonSection
             title="Basic Info"
             isEditable={isEditable}
             setIsEditable={setIsEditable}
-            rows={[{ label: "Username", value: `${user.userName}`, isInput:false }, { label: "Name", type:"text", isInput:true, value: `${user.firstName} ${user.lastName}` }, { label: "Birthday", type:"date", isInput:true,  value: `${userInfo.dob}` }, { label: "Gender", type:"text", isInput:true,  value: `${userInfo.gender}` }]}
+            rows={[{ label: "Username", value: `${userName}`, isInput:false }, { label: "Name", type:"text", isInput:true, value: `${firstName} ${lastName}` }, { label: "Birthday", type:"date", isInput:true,  value: `${dob}` }, { label: "Gender", type:"text", isInput:true,  value: `${gender}` }]}
         />
     )
 }

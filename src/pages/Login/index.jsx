@@ -14,12 +14,17 @@ import { useForm } from 'react-hook-form';
 import { request } from '../../utils/request';
 import { toast } from 'react-toastify';
 
+import { useDispatch } from 'react-redux';
+import { setLoginUser } from '../../redux/slices/loginUserSlice';
+
 const redirections = {
-    portfolio: ["http://localhost:3001", "http://localhost:3000", "https://stage.driveosx.com"],
-    testingsite: ["http://localhost:3001", "http://localhost:3000", "https://stage.driveosx.com"],
+    portfolio: ["http://localhost:3001","http://localhost:3003", "http://localhost:3004", "http://localhost:3000", "https://stage.driveosx.com"],
+    testingsite: ["http://localhost:3001","http://localhost:3003", "http://localhost:3004", "http://localhost:3000", "https://stage.driveosx.com"],
 };
 
 const Login = () => {
+    const dispatch = useDispatch();
+
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
@@ -84,6 +89,8 @@ const Login = () => {
                 } else {
                     toast.success(resData.message);
                     if (!getRedirectUrl) {
+                        console.log("----->",resData.user);
+                        dispatch(setLoginUser(resData.user) )
                         navigate(`/account`)
                     } else {
                         window.location.href = `${getRedirectUrl}?token=${resData.token}`;
