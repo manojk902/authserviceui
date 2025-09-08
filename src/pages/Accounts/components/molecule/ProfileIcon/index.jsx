@@ -3,7 +3,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import React from 'react'
 import { logout } from '../../../../../utils/logout';
 
-const ProfileIcon = () => {
+const ProfileIcon = ({firstName}) => {
+
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
     const handleOpenUserMenu = (event) => {
@@ -18,7 +19,7 @@ const ProfileIcon = () => {
         let hash = 0;
         let i;
 
-        for (i = 0; i < string.length; i++) {
+        for (i = 0; i < string?.length; i++) {
             hash = string.charCodeAt(i) + ((hash << 5) - hash);
         }
 
@@ -26,7 +27,7 @@ const ProfileIcon = () => {
 
         for (i = 0; i < 3; i++) {
             const value = (hash >> (i * 8)) & 0xff;
-            color += ('00' + value.toString(16)).slice(-2);
+            color += ('00' + value.toString(16))?.slice(-2);
         }
 
         return color;
@@ -37,7 +38,7 @@ const ProfileIcon = () => {
             sx: {
                 bgcolor: stringToColor(name),
             },
-            children: name.split(" ")[0][0], // ✅ only first letter of first word
+            children: name?.split(" ")[0][0], // ✅ only first letter of first word
         };
     }
     return (
@@ -45,7 +46,7 @@ const ProfileIcon = () => {
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, bgcolor: "red" }}>
                 <Avatar
                     sx={{ bgcolor: 'yellow', width: 40, height: 40 }}
-                    {...stringAvatar('Mukesh Kumar')}
+                    {...stringAvatar(firstName)}
                 />
             </IconButton>
             <Menu

@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import AppDrawer from '../../molecule/AppDrawer';
 import ProfileIcon from '../../molecule/ProfileIcon';
 
-export default function Header() {
+export default function Header({firstName}) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 
@@ -62,7 +62,7 @@ export default function Header() {
                     >
                         <AppsRoundedIcon sx={{ fontSize: '2vw' }} />
                     </IconButton>
-                    <ProfileIcon/>
+                    <ProfileIcon firstName={firstName}/>
                 </Toolbar>
                 <AppDrawer open={open} anchorEl={anchorEl} handleClose={handleClose} handleAppClick={handleAppClick}/>
             </AppBar>

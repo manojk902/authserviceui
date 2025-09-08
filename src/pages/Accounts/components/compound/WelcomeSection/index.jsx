@@ -4,10 +4,8 @@ import ProfileImg from '../../../../../assets/img/profile.webp'
 import PermMediaIcon from '@mui/icons-material/PermMedia';
 import styles from './WelcomeSection.module.css';
 import { useState } from "react";
-import { useSelector } from "react-redux";
 
-const WelcomeSection = () => {
-    const user = useSelector((state) => state.user?.userData);
+const WelcomeSection = ({firstName, lastName}) => {
     const [previewImg, setPreviewImg] = useState(ProfileImg);
     const handleImageChange = (e) => {
         const file = e.target.files?.[0];
@@ -24,7 +22,7 @@ const WelcomeSection = () => {
                     <input type="file" accept="image/*" hidden onChange={handleImageChange} />
                 </Button>
             </Box>
-            <Box><Typography variant="h3" fontSize="2.5vw">Welcome, {user.firstName} {user.lastName}</Typography></Box>
+            <Box><Typography variant="h3" fontSize="2.5vw">Welcome, {firstName} {lastName}</Typography></Box>
             <Box><Typography variant="p" fontSize="1.8">Manage your info and security to make DriveOSx work better for you.</Typography></Box>
         </Box>
     )
