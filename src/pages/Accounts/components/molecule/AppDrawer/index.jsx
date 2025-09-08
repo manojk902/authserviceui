@@ -6,8 +6,7 @@ import { Link } from 'react-router-dom';
 const AppDrawer = ({ open, anchorEl, handleClose, handleAppClick }) => {
     const token = localStorage.getItem("token")
     const apps = [
-        { name: 'Portfolio', icon: <AccountCircle />, img: "https://cdn-icons-png.freepik.com/512/9537/9537722.png", color: '#5f6368', url: "https://stage.driveosx.com/" },
-        { name: 'Portfolio', icon: <AccountCircle />, img: "https://cdn-icons-png.freepik.com/512/9537/9537722.png", color: '#5f6368', url: "http://localhost:3001/" },
+        { name: 'Portfolio-stage', icon: <AccountCircle />, img: "https://cdn-icons-png.freepik.com/512/9537/9537722.png", color: '#5f6368', url: process.env.REACT_APP_PORTFOLIO_URL },
     ];
     return (
         <Popover
