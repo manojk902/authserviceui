@@ -19,3 +19,11 @@
   opacity: 1;
   transition: all .4s ease;
 }
+
+.imageSaveBtn { 
+  position: absolute !important; 
+  top: 81%; 
+  right: -12%; } 
+.imageSaveBtn:hover{ 
+  background-color: transparent; 
+}
