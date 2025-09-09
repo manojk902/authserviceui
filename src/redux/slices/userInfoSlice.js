@@ -23,7 +23,6 @@ const userInfoSlice = createSlice({
     name: 'userInfo',
     initialState: {
         userInfoData: {
-            userPhoto: "defaultProfilePic.png",
             dob: "00-00-0000",
             gender: "Male",
             home_address: "Home Address",
