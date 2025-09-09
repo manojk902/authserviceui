@@ -89,7 +89,6 @@ const Login = () => {
                 } else {
                     toast.success(resData.message);
                     if (!getRedirectUrl) {
-                        console.log("----->",resData.user);
                         dispatch(setLoginUser(resData.user) )
                         navigate(`/account`)
                     } else {
