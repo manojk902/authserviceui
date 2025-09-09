@@ -15,8 +15,6 @@ const Accounts = () => {
     const loginUser = useSelector((state) => state.loginUser?.loginUserData);
     const user = useSelector((state) => state.user?.userData);
     const userInfo = useSelector((state) => state.userInfo?.userInfoData);
-    console.log("User data in Accounts page:", user.firstName);
-    console.log("User info data photo in Accounts page:", userInfo);
    
     useEffect(() => {
         if (loginUser?.id) {

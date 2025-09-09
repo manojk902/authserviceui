@@ -1,6 +1,7 @@
 .imageContainer {
   width: 12vw;
   height: 12vw;
+  overflow: hidden;
   text-align: center;
   align-content: center;
   border-radius: 100%;
@@ -20,10 +21,15 @@
   transition: all .4s ease;
 }
 
-.imageSaveBtn { 
-  position: absolute !important; 
-  top: 81%; 
-  right: -12%; } 
-.imageSaveBtn:hover{ 
-  background-color: transparent; 
+.imageSaveBtn {
+  position: absolute !important;
+  top: 81%;
+  right: 50%;
+  transform: translateX(50%);
+  z-index: 2;
+  
+}
+
+.imageSaveBtn:hover {
+  background-color: transparent;
 }

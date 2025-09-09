@@ -9,7 +9,6 @@ export const fetchUserInfoData = createAsyncThunk('userInfo/fetchUserInfoData', 
             method: 'get',
         });
         if(res.status === "success"){
-            console.log("Fetched user info data:", res.user);
             return res.user;
         }
         return "Something went wrong, not fetched data";
