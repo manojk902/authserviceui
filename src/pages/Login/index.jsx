@@ -106,7 +106,7 @@ const Login = () => {
 
         } catch (error) {
             console.error("Error during login:", error);
-            toast.error("An error occurred during login. Please try again.");
+            toast.error("USER NOT FOUND! An error occurred during login. Please try again.");
             reset();
         }
     };

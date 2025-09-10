@@ -1,4 +1,4 @@
-import { Box, Table, TableBody, TableRow, TextField, Typography } from "@mui/material";
+import { Box, Table, TableBody, TableRow, TextField, Tooltip, Typography } from "@mui/material";
 import styles from './CommonSection.module.css';
 import EditIcon from '@mui/icons-material/Edit';
 import EditOffIcon from '@mui/icons-material/EditOff';
@@ -29,10 +29,10 @@ const CommonSection = ({ title, rows, isEditable, setIsEditable }) => {
                 {(isEditable) ?
                     <>
                         <Box display={"flex"} alignItems={"center"} gap={2}>
-                            <EditOffIcon onClick={handleClick} className={styles.editBtn} sx={{ color: "red" }} />
-                            <SaveAsIcon color="success" onClick={saveChanges} className={styles.saveBtn} />
+                            <Tooltip title="Discard Changes" placement="top" arrow><EditOffIcon onClick={handleClick} className={styles.editBtn} sx={{ color: "red" }} /></Tooltip>
+                            <Tooltip title="Save Changes" placement="top" arrow><SaveAsIcon color="success" onClick={saveChanges} className={styles.saveBtn} /></Tooltip>
                         </Box>
-                    </> : <EditIcon onClick={handleClick} className={styles.editBtn} />}
+                    </> : <Tooltip title="Edit" placement="top" arrow><EditIcon onClick={handleClick} className={styles.editBtn} title="Edit" /></Tooltip> }
 
             </Box>
             <Table sx={{}} aria-label="simple table">
