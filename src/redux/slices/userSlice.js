@@ -19,9 +19,6 @@ export const fetchUserData = createAsyncThunk('user/fetchUserData', async (userI
 
 export const updateUserData = createAsyncThunk('user/updateUserData', async (updateUserData) => {
     try {
-        console.log(
-            "check=>", updateUserData
-        )
         const res = await request({
             url: `/update-user`,
             method: 'put',

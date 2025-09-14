@@ -10,7 +10,6 @@ const WelcomeSection = ({ userId, firstName, lastName }) => {
     const [previewImg, setPreviewImg] = useState(ProfileImg);
     const [isImageSelected, setIsImageSelected] = useState(false);
     const [selectedFile, setSelectedFile] = useState(previewImg);
-    console.log("preview img =>", previewImg)
 
     const handleImageChange = (e) => {
         const file = e.target.files?.[0];

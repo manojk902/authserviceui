@@ -49,7 +49,6 @@ const SecurityInfo = ({ recoveryEmail, isEditable, setIsEditable }) => {
                 toast.error("Failed to deactivate account. Please try again!");
             }
 
-            console.log("Deactivate reason => ", text, loginUser?.id);
         }
 
         handleCloseDeactivate();
@@ -82,15 +81,11 @@ const SecurityInfo = ({ recoveryEmail, isEditable, setIsEditable }) => {
                             deleteText: deleteText
                         }
                     })
-                    console.log("delete res ->", deleteRes)
                     if (deleteRes.status === "success") {
                         toast.success(deleteRes.message)
-                        console.log("Delet success => ");
                         navigate("/")
                     } else {
                         toast.error(deleteRes.message)
-                        console.log("Delet Failed => ");
-
                     }
                 } catch (error) {
                     toast.error("Failed to delete account, Please try again!")
@@ -118,7 +113,6 @@ const SecurityInfo = ({ recoveryEmail, isEditable, setIsEditable }) => {
         const formData = new FormData(event.currentTarget);
         const formJson = Object.fromEntries(formData.entries());
         const password = formJson.password;
-        console.log("type of psd =>", typeof password, loginUser?.email, password)
         if (password && loginUser?.email) {
             try {
                 const isSamePassword = await request({
@@ -129,7 +123,6 @@ const SecurityInfo = ({ recoveryEmail, isEditable, setIsEditable }) => {
                         password: password
                     }
                 })
-                console.log("same password =>", isSamePassword)
                 if (isSamePassword.status === "success" && isSamePassword.isPasswordMatch) {
                     navigate("/forgot-password")
                     toast.success("Now you can reset password")

@@ -15,8 +15,6 @@ const CommonSection = ({ title, rows, isEditable, setIsEditable }) => {
     const dispatch = useDispatch();
     const [localRows, setLocalRows] = useState(rows);
 
-    console.log("userInfo in common section =>", typeof userInfo.user_photo);
-
     useEffect(() => {
         setLocalRows(rows);
     }, [rows]);
@@ -40,7 +38,6 @@ const CommonSection = ({ title, rows, isEditable, setIsEditable }) => {
         })
 
         if (Object.keys(userUpdates).length > 0) {
-            console.log("User updates to be saved:", userUpdates);
             if (loginUser?.id) {
                 userUpdates.id = loginUser.id;
                 userUpdates.first_name = userUpdates.name?.split(" ")[0] || user.firstName;
@@ -51,7 +48,6 @@ const CommonSection = ({ title, rows, isEditable, setIsEditable }) => {
                 dispatch(updateUserData(userUpdates)).then(()=>{
                     dispatch(fetchUserData(loginUser?.id))
                 });
-                console.log("User ID added to updates:", userUpdates);
             }
             // Call API or dispatch action to save user updates
         }
@@ -73,7 +69,6 @@ const CommonSection = ({ title, rows, isEditable, setIsEditable }) => {
                 dispatch(updateUserInfoData(userInfoUpdates)).then(()=>{
                     dispatch(fetchUserInfoData(loginUser?.id))
                 });
-                console.log("User Info payload =>", userInfoUpdates);
             }
         }
 

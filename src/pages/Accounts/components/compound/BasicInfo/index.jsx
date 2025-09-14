@@ -1,7 +1,6 @@
 import CommonSection from "../../molecule/CommonSection";
 
 const BasicInfo = ({userName, firstName, lastName, dob, gender,userPhoto, isEditable, setIsEditable }) => {
-    console.log("BasicInfo props:", {userName, firstName, lastName, dob, gender,userPhoto});
     return (
         <CommonSection
             title="Basic Info"
