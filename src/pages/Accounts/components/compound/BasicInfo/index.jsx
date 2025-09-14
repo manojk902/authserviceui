@@ -1,13 +1,18 @@
 import CommonSection from "../../molecule/CommonSection";
 
-const BasicInfo = ({userName, firstName, lastName, dob, gender, isEditable, setIsEditable }) => {
-    console.log("BasicInfo props:", {userName, firstName, lastName, dob, gender});
+const BasicInfo = ({userName, firstName, lastName, dob, gender,userPhoto, isEditable, setIsEditable }) => {
+    console.log("BasicInfo props:", {userName, firstName, lastName, dob, gender,userPhoto});
     return (
         <CommonSection
             title="Basic Info"
             isEditable={isEditable}
             setIsEditable={setIsEditable}
-            rows={[{ label: "Username", value: `${userName}`, isInput:false }, { label: "Name", type:"text", isInput:true, value: `${firstName} ${lastName}` }, { label: "Birthday", type:"date", isInput:true,  value: `${dob}` }, { label: "Gender", type:"text", isInput:true,  value: `${gender}` }]}
+            rows={[
+                {key:"username", label: "Username", value: `${userName}`, isInput:false, source: "user" }, 
+                {key:"name", label: "Name", type:"text", isInput:true, value: `${firstName} ${lastName}`, placeholder:"Firstname Lastname", source: "user" }, 
+                {key:"dob", label: "Birthday", type:"date", isInput:true,  value: `${dob}`, source: "userInfo" }, 
+                {key:"gender", label: "Gender", type:"text", isInput:true,  value: `${gender}`, placeholder:"must be one of them : Male, Female, Other, Not Specified" , source: "userInfo" }
+            ]}
         />
     )
 }

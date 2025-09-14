@@ -8,21 +8,25 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserData } from "../../redux/slices/userSlice";
 import { fetchUserInfoData } from "../../redux/slices/userInfoSlice";
+import { useNavigate } from "react-router-dom";
 // import { Component } from "react";
 
 const Accounts = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const loginUser = useSelector((state) => state.loginUser?.loginUserData);
     const user = useSelector((state) => state.user?.userData);
     const userInfo = useSelector((state) => state.userInfo?.userInfoData);
-   
+    
     useEffect(() => {
         if (loginUser?.id) {
             dispatch(fetchUserData(loginUser?.id))
             dispatch(fetchUserInfoData(loginUser?.id))
+        }else{
+            navigate('/')
         }
 
-    }, [dispatch, loginUser?.id])
+    }, [dispatch, loginUser?.id, navigate])
 
     const [isEditable, setIsEditable] = useState({
         basicInfo: false,
@@ -38,14 +42,15 @@ const Accounts = () => {
         }))
     }
 
+
     return (
         <>
             <Header firstName={user?.firstName} />
             <Container maxWidth="md" sx={{ display: "flex", flexDirection: "column", gap: 6, py: 4 }}>
-                <WelcomeSection userId={loginUser?.id} firstName={user?.firstName} lastName={user?.lastName} />
-                <BasicInfo userName={user?.username} firstName={user?.firstName} lastName={user?.lastName} dob={userInfo?.dob || "Not Specified"} gender={userInfo?.gender || "Not Specified"} isEditable={isEditable.basicInfo} setIsEditable={() => toggleEdit("basicInfo")} />
-                <ContactInfo email={user?.email} phoneNumber={user?.phoneNumber || "Not Specified"} home={userInfo?.home_address || "Not Specified"} work={userInfo?.work_address || "Not Specified"} isEditable={isEditable.contactInfo} setIsEditable={() => toggleEdit("contactInfo")} />
-                <SecurityInfo recoveryEmail={user?.recoveryEmail || "Not Specified"} isEditable={isEditable.securityInfo} setIsEditable={() => toggleEdit("securityInfo")} />
+                <WelcomeSection  userId={loginUser?.id} firstName={user?.firstName} lastName={user?.lastName} userPhoto={userInfo?.user_photo} />
+                <BasicInfo userName={user?.username} firstName={user?.firstName} lastName={user?.lastName} dob={userInfo?.dob } gender={userInfo?.gender } userPhoto={userInfo?.user_photo} isEditable={isEditable.basicInfo} setIsEditable={() => toggleEdit("basicInfo")} />
+                <ContactInfo email={user?.email} phoneNumber={user?.phoneNumber } home={userInfo?.home_address } work={userInfo?.work_address } isEditable={isEditable.contactInfo} setIsEditable={() => toggleEdit("contactInfo")} />
+                <SecurityInfo recoveryEmail={user?.recoveryEmail } isEditable={isEditable.securityInfo} setIsEditable={() => toggleEdit("securityInfo")} />
             </Container>
 
         </>

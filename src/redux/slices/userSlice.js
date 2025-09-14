@@ -3,31 +3,50 @@ import { request } from '../../utils/request';
 
 export const fetchUserData = createAsyncThunk('user/fetchUserData', async (userId) => {
     try {
-            const numericUserId = Number(userId);
-            const res = await request({
-                url: `/get-user/${numericUserId}`,
-                method: 'get',
-            });
-            if(res.status === "success"){
-                return res.user;
-            }
-            return "Something went wrong, not fetched data";
-        } catch (error) {
-            console.error("Error fetching user data:", error);
-            throw error;
+        const numericUserId = Number(userId);
+        const res = await request({
+            url: `/get-user/${numericUserId}`,
+            method: 'get',
+        });
+        if (res.status === "success") {
+            return res.user;
         }
+        return "Something went wrong, not fetched data";
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+    }
 })
+
+export const updateUserData = createAsyncThunk('user/updateUserData', async (updateUserData) => {
+    try {
+        console.log(
+            "check=>", updateUserData
+        )
+        const res = await request({
+            url: `/update-user`,
+            method: 'put',
+            data: updateUserData
+        });
+        if (res.status === "success") {
+            return res.user;
+        }
+        return "Something went wrong, not updated data";
+    } catch (error) {
+        console.error("Error updateing user data:", error);
+    }
+})
+
 
 const userSlice = createSlice({
     name: 'user',
     initialState: {
         userData: {
-            username: "Demo",
-            firstName: "John",
-            lastName: "Doe",
-            email: "John@example.com",
-            phoneNumber: "1234567890",
-            recoveryEmail: "recoveryEmail@example.com"
+            username: "",
+            firstName: "",
+            lastName: "",
+            email: "",
+            phoneNumber: "9xxxxxxxxx",
+            recoveryEmail: "recovery@example.com"
         },
         loading: false,
         error: null,
@@ -57,5 +76,5 @@ const userSlice = createSlice({
     }
 })
 
-export const {clearUser} = userSlice.actions;
+export const { clearUser } = userSlice.actions;
 export default userSlice.reducer;

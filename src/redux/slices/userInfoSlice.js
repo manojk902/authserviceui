@@ -9,23 +9,40 @@ export const fetchUserInfoData = createAsyncThunk('userInfo/fetchUserInfoData', 
             method: 'get',
         });
         if(res.status === "success"){
-            return res.user;
+            return res.userInfo;
         }
         return "Something went wrong, not fetched data";
     } catch (error) {
         console.error("Error fetching user info data:", error);
-        throw error;
     }
 })
+
+export const updateUserInfoData = createAsyncThunk('userInfo/updateUserInfoData', async (updateUserInfoData) => {
+    try {
+        const res =await request({
+            url: `/update-user-info`,
+            method: 'put',
+            data: updateUserInfoData
+        });
+        if(res.status === "success"){
+            return res.userInfo;
+        }
+        return "Something went wrong, not updated userInfoData data";
+    } catch (error) {
+        console.error("Error Updating user info data:", error);
+    }
+})
+
 
 const userInfoSlice = createSlice({
     name: 'userInfo',
     initialState: {
         userInfoData: {
-            dob: "00-00-0000",
-            gender: "Male",
-            home_address: "Home Address",
-            work_address: "Work Address"
+            // user_photo: "",
+            dob: "YYYY-MM-DD",
+            gender: "Not Specified",
+            home_address: "Not Specified",
+            work_address: "Not Specified"
         },
         loading: false,
         error: null,

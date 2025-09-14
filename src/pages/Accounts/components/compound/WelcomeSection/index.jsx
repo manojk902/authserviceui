@@ -9,7 +9,8 @@ import { request } from "../../../../../utils/request";
 const WelcomeSection = ({ userId, firstName, lastName }) => {
     const [previewImg, setPreviewImg] = useState(ProfileImg);
     const [isImageSelected, setIsImageSelected] = useState(false);
-    const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedFile, setSelectedFile] = useState(previewImg);
+    console.log("preview img =>", previewImg)
 
     const handleImageChange = (e) => {
         const file = e.target.files?.[0];
@@ -31,7 +32,10 @@ const WelcomeSection = ({ userId, firstName, lastName }) => {
                     if (resData.status === "success" && resData.userPhoto) {
                         setPreviewImg(resData.userPhoto);
                         setIsImageSelected(false);
-                    } else {
+                    } else if (previewImg === ProfileImg) {  
+                        setPreviewImg(ProfileImg);
+                    }
+                    else {
                         setPreviewImg(ProfileImg);
                         setIsImageSelected(false);
                         console.warn("No user photo found, using default.");
@@ -42,7 +46,7 @@ const WelcomeSection = ({ userId, firstName, lastName }) => {
             }
         };
         getUserPhoto();
-    }, [userId]);
+    }, [ userId]);
 
     const updateUserPhoto = async () => {
         if (!selectedFile) return;
@@ -62,6 +66,7 @@ const WelcomeSection = ({ userId, firstName, lastName }) => {
             });
 
             if (resData.status === "success") {
+                setPreviewImg(URL.createObjectURL(selectedFile));
                 setIsImageSelected(false);
                 setSelectedFile(null);
             } else {
