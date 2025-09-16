@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Tooltip, Typography } from "@mui/material";
 import ProfileImg from '../../../../../assets/img/profile.webp';
 import PermMediaIcon from '@mui/icons-material/PermMedia';
 import SaveIcon from '@mui/icons-material/Save';
@@ -9,13 +9,13 @@ import { request } from "../../../../../utils/request";
 const WelcomeSection = ({ userId, firstName, lastName }) => {
     const [previewImg, setPreviewImg] = useState(ProfileImg);
     const [isImageSelected, setIsImageSelected] = useState(false);
-    const [selectedFile, setSelectedFile] = useState(null); 
+    const [selectedFile, setSelectedFile] = useState(previewImg);
 
     const handleImageChange = (e) => {
         const file = e.target.files?.[0];
         if (file) {
-            setPreviewImg(URL.createObjectURL(file)); 
-            setSelectedFile(file); 
+            setPreviewImg(URL.createObjectURL(file));
+            setSelectedFile(file);
             setIsImageSelected(true);
         }
     };
@@ -31,7 +31,10 @@ const WelcomeSection = ({ userId, firstName, lastName }) => {
                     if (resData.status === "success" && resData.userPhoto) {
                         setPreviewImg(resData.userPhoto);
                         setIsImageSelected(false);
-                    } else {
+                    } else if (previewImg === ProfileImg) {  
+                        setPreviewImg(ProfileImg);
+                    }
+                    else {
                         setPreviewImg(ProfileImg);
                         setIsImageSelected(false);
                         console.warn("No user photo found, using default.");
@@ -42,10 +45,10 @@ const WelcomeSection = ({ userId, firstName, lastName }) => {
             }
         };
         getUserPhoto();
-    }, [userId]);
+    }, [ userId]);
 
     const updateUserPhoto = async () => {
-        if (!selectedFile) return; 
+        if (!selectedFile) return;
 
         try {
             const formData = new FormData();
@@ -62,6 +65,7 @@ const WelcomeSection = ({ userId, firstName, lastName }) => {
             });
 
             if (resData.status === "success") {
+                setPreviewImg(URL.createObjectURL(selectedFile));
                 setIsImageSelected(false);
                 setSelectedFile(null);
             } else {
@@ -91,7 +95,7 @@ const WelcomeSection = ({ userId, firstName, lastName }) => {
                     alt="profile-img"
                 />
                 <Button component="label" className={styles.imageSelectorBtn}>
-                    <PermMediaIcon
+                    <Tooltip title="Select Photo" placement="top" arrow><PermMediaIcon
                         sx={{
                             p: ".6vw",
                             fontSize: "3vw",
@@ -100,12 +104,13 @@ const WelcomeSection = ({ userId, firstName, lastName }) => {
                             color: "white",
                         }}
                     />
+                    </Tooltip>
                     <input type="file" accept="image/*" hidden onChange={handleImageChange} />
                 </Button>
 
                 {isImageSelected && (
                     <Button className={styles.imageSaveBtn} onClick={updateUserPhoto}>
-                        <SaveIcon sx={{ fontSize: "1.8vw", color: "green" }} />
+                        <Tooltip title="Save Photo" placement="top" arrow><SaveIcon sx={{ fontSize: "1.8vw", color: "green" }} /></Tooltip>
                     </Button>
                 )}
             </Box>
