@@ -10,8 +10,8 @@ import { toast } from 'react-toastify';
 const RecoveryEmail = () => {
     const [searchParams] = useSearchParams();
 
-    const getRedirectUrl = localStorage.getItem("redirectUrl") // Default redirect URL if not set
-    const token = localStorage.getItem("token"); // Get token from local storage
+    const getRedirectUrl = localStorage.getItem("redirectUrl") 
+    const token = localStorage.getItem("token"); 
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     // Function to handle adding recovery email
@@ -31,9 +31,16 @@ const RecoveryEmail = () => {
             })
             if (resData.status === "success") {
                 toast.success(resData.message);
-                window.location.href = `${getRedirectUrl}?token${token}`;
-                localStorage.removeItem("appName");
-                localStorage.removeItem("redirectUrl");
+                if (!getRedirectUrl || getRedirectUrl.trim() === "") {
+                    window.location.href = `${process.env.REACT_APP_UI_URL}/account`;
+                    localStorage.removeItem("appName");
+                    localStorage.removeItem("redirectUrl");
+                } else {
+                    window.location.href = `${getRedirectUrl}?token${token}`;
+                    localStorage.removeItem("appName");
+                    localStorage.removeItem("redirectUrl");
+                }
+
                 reset();
             } else {
                 console.error("Failed to add recovery email:", resData.message);
@@ -69,13 +76,24 @@ const RecoveryEmail = () => {
                 />
 
                 <Box display="flex" justifyContent="space-between" mt={4}>
-                    <Button
-                        variant="text"
-                        type='button'
-                        onClick={() => window.location.href = `${getRedirectUrl}?token=${token}`}
-                    >
-                        Skip & Go to Site
-                    </Button>
+
+                    {(!getRedirectUrl || getRedirectUrl.trim() === "") ? (
+                        <Button
+                            variant="text"
+                            type="button"
+                            onClick={() => window.location.href = `${process.env.REACT_APP_UI_URL}/account`}
+                        >
+                            Skip & Go to Site
+                        </Button>
+                    ) : (
+                        <Button
+                            variant="text"
+                            type="button"
+                            onClick={() => window.location.href = `${getRedirectUrl}?token=${token}`}
+                        >
+                            Skip & Go to Site
+                        </Button>
+                    )}
                     <Button
                         variant="contained"
                         sx={{ bgcolor: '#1a73e8' }}

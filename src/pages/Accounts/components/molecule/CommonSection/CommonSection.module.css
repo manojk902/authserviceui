@@ -1,0 +1,30 @@
+.titleCover {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.editBtn {
+    font-size: 1.6vw;
+    cursor: pointer;
+    visibility: hidden;
+    color: #4285f4;
+}
+.saveBtn {
+    font-size: 1.6vw;
+    cursor: pointer;
+}
+
+.commonSectionCover:hover .editBtn {
+    visibility:visible
+}
+
+.inputField {
+    width: 75%;
+    font-size: 1.3vw;
+    padding: .5vw;
+    border-radius: .3vw;
+    border: 1px solid #ccc;
+    margin: 2px 0px;
+}

@@ -1,4 +1,3 @@
-import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from '../pages/Login';
 import Signup from "../pages/Signup";
@@ -7,11 +6,14 @@ import ResetPassword from "../pages/ResetPassword";
 import RecoveryEmail from "../pages/RecoveryEmail";
 import EmailVerification from "../pages/EmailVerification";
 import Layout from '../Layout';
+import Accounts from '../pages/Accounts';
+import ProtectedRoute from "../components/ProtectedRoute";
 
 const NavRoutes = () => {
     return (
         <Router>
             <Routes>
+                <Route path='/account' element={<ProtectedRoute><Accounts /></ProtectedRoute>} />
                 <Route path="/" element={<Layout />} >
                     <Route index element={<Login />} />
                     <Route path="Login" element={<Login />} />

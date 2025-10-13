@@ -14,12 +14,17 @@ import { useForm } from 'react-hook-form';
 import { request } from '../../utils/request';
 import { toast } from 'react-toastify';
 
+import { useDispatch } from 'react-redux';
+import { setLoginUser } from '../../redux/slices/loginUserSlice';
+
 const redirections = {
-    portfolio: ["http://localhost:3001", "http://localhost:3000", "https://stage.driveosx.com"],
-    testingsite: ["http://localhost:3001", "http://localhost:3000", "https://stage.driveosx.com"],
+    portfolio: ["http://localhost:3001","http://localhost:3003", "http://localhost:3004", "http://localhost:3000", "https://stage.driveosx.com","http://192.168.1.5:3003"],
+    testingsite: ["http://localhost:3001","http://localhost:3003", "http://localhost:3004", "http://localhost:3000", "https://stage.driveosx.com","http://192.168.1.5:3003"],
 };
 
 const Login = () => {
+    const dispatch = useDispatch();
+
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
@@ -33,14 +38,18 @@ const Login = () => {
     // Validate and store appName and redirectUrl on mount
     useEffect(() => {
         if (appName && redirectUrl) {
-            const normalizeUrl = (url) => url.replace(/\/+$/, '');
+            const normalizeUrl = (url) => url.replace(/\/+$/, ""); // removes trailing slashes
             const normalizedRedirect = normalizeUrl(redirectUrl);
 
-            const isValidRedirect = redirections[appName]?.includes(normalizedRedirect);
+            const appRedirections = redirections[appName]; // could be undefined
+            const isValidRedirect = appRedirections?.includes(normalizedRedirect);
 
             if (isValidRedirect) {
                 localStorage.setItem("appName", appName);
                 localStorage.setItem("redirectUrl", normalizedRedirect);
+            } else if (appRedirections && appRedirections[0]) {
+                localStorage.setItem("appName", appName);
+                localStorage.setItem("redirectUrl", appRedirections[0]);
             } else {
                 toast.warn("Invalid redirect URL for the specified app name.");
                 localStorage.removeItem("appName");
@@ -49,14 +58,17 @@ const Login = () => {
         }
     }, [appName, redirectUrl]);
 
+
     const getAppName = localStorage.getItem("appName");
     const getRedirectUrl = localStorage.getItem("redirectUrl");
 
+
     const onSubmit = async (data) => {
-        if (!getAppName || !getRedirectUrl || !redirections[getAppName]?.includes(getRedirectUrl)) {
-            toast.warn("Redirect configuration is invalid or missing.");
-            return;
-        }
+        // if (!getAppName || !getRedirectUrl || !redirections[getAppName]?.includes(getRedirectUrl)) {
+        //     toast.warn("Redirect configuration is invalid or missing.");
+        //     // <Navigate to="/account" />
+        // }
+
         try {
             const resData = await request({
                 method: "post",
@@ -76,9 +88,15 @@ const Login = () => {
                     navigate(`/recovery-email?id=${id}`);
                 } else {
                     toast.success(resData.message);
-                    window.location.href = `${getRedirectUrl}?token=${resData.token}`;
-                    localStorage.removeItem("appName");
-                    localStorage.removeItem("redirectUrl");
+                    if (!getRedirectUrl) {
+                        dispatch(setLoginUser(resData.user) )
+                        navigate(`/account`)
+                    } else {
+                        window.location.href = `${getRedirectUrl}?token=${resData.token}`;
+                        localStorage.removeItem("appName");
+                        localStorage.removeItem("redirectUrl");
+                    }
+
                 }
                 reset();
             } else {
@@ -88,7 +106,7 @@ const Login = () => {
 
         } catch (error) {
             console.error("Error during login:", error);
-            toast.error("An error occurred during login. Please try again.");
+            toast.error("USER NOT FOUND! An error occurred during login. Please try again.");
             reset();
         }
     };
