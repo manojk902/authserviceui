@@ -45,7 +45,7 @@ const WelcomeSection = ({ userId, firstName, lastName }) => {
             }
         };
         getUserPhoto();
-    }, [ userId]);
+    }, [previewImg, userId]);
 
     const updateUserPhoto = async () => {
         if (!selectedFile) return;
