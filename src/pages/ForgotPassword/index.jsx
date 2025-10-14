@@ -16,7 +16,7 @@ const ForgotPassword = () => {
                 url: "forgot-password",
                 data: {
                     email: data.forgotPasswordEmail,
-                    useRecoveryEmail: data.isRecovery
+                    useRecoveryEmail: data.isRecovery === "true" 
                 }
             })
             if (resData.status === "success") {
