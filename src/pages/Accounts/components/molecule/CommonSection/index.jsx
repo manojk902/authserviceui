@@ -1,4 +1,4 @@
-import { Box, Table, TableBody, TableRow, TextField, Tooltip, Typography } from "@mui/material";
+import { Box, MenuItem, Select, Table, TableBody, TableRow, TextField, Tooltip, Typography } from "@mui/material";
 import styles from './CommonSection.module.css';
 import EditIcon from '@mui/icons-material/Edit';
 import EditOffIcon from '@mui/icons-material/EditOff';
@@ -45,7 +45,7 @@ const CommonSection = ({ title, rows, isEditable, setIsEditable }) => {
                 userUpdates.email = userUpdates.email || user.email;
                 userUpdates.phone_number = userUpdates.phone_number || user.phoneNumber;
                 userUpdates.recovery_email = userUpdates.recovery_email || user.recoveryEmail;
-                dispatch(updateUserData(userUpdates)).then(()=>{
+                dispatch(updateUserData(userUpdates)).then(() => {
                     dispatch(fetchUserData(loginUser?.id))
                 });
             }
@@ -56,8 +56,8 @@ const CommonSection = ({ title, rows, isEditable, setIsEditable }) => {
                 const formatDate = (date) => {
                     if (!date) return null;
                     const d = new Date(date);
-                    if (isNaN(d.getTime())) return null; 
-                    return d.toISOString().split("T")[0]; 
+                    if (isNaN(d.getTime())) return null;
+                    return d.toISOString().split("T")[0];
                 };
 
                 userInfoUpdates.id = loginUser.id;
@@ -66,7 +66,7 @@ const CommonSection = ({ title, rows, isEditable, setIsEditable }) => {
                 userInfoUpdates.gender = userInfoUpdates.gender || userInfo.gender || "";
                 userInfoUpdates.home_address = userInfoUpdates.home_address || userInfo.home_address || "";
                 userInfoUpdates.work_address = userInfoUpdates.work_address || userInfo.work_address || "";
-                dispatch(updateUserInfoData(userInfoUpdates)).then(()=>{
+                dispatch(updateUserInfoData(userInfoUpdates)).then(() => {
                     dispatch(fetchUserInfoData(loginUser?.id))
                 });
             }
@@ -110,7 +110,30 @@ const CommonSection = ({ title, rows, isEditable, setIsEditable }) => {
                             sx={{ '&:last-child td, &:last-child th': { border: 0 }, display: "flex", pl: "2vw", py: '.5vw', alignItems: "center", borderTop: "1px solid black", width: "100%" }}
                         >
                             <Box component="p" sx={{ fontSize: "1vw", width: "25%" }}>{row.label}</Box>
-                            {(isEditable && row.isInput) ? <TextField type={row.type} value={row.value} placeholder={row.placeholder} onChange={(e) => handleChange(index, e.target.value)} className={styles.inputField} /> : <Box component="p" sx={{ fontSize: "1.3vw", width: "75%" }} >{row.value}</Box>}
+                            {row.loading ? (<Box sx={{ fontSize: "1.2vw", color: "gray", width: "75%" }}>
+                                Content Loading...
+                            </Box>) : (<>{(isEditable && row.isInput) ? (
+                                row.key === "gender" ? (
+                                    <Select
+                                        value={row.value || ""}
+                                        onChange={(e) => handleChange(index, e.target.value)}
+                                        fullWidth
+                                    >
+                                        <MenuItem value="Male">Male</MenuItem>
+                                        <MenuItem value="Female">Female</MenuItem>
+                                        <MenuItem value="Other">Other</MenuItem>
+                                        <MenuItem value="Not Specified">Not Specified</MenuItem>
+                                    </Select>
+                                ) : (
+                                    <TextField
+                                        type={row.type}
+                                        value={row.value}
+                                        placeholder={row.placeholder}
+                                        onChange={(e) => handleChange(index, e.target.value)}
+                                        fullWidth
+                                    />
+                                )
+                            ) : <Box component="p" sx={{ fontSize: "1.3vw", width: "75%" }} >{row.value}</Box>}</>)}
 
                         </TableRow>
                     ))}

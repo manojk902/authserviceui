@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import AppsRoundedIcon from '@mui/icons-material/AppsRounded';
 import {
     Box,
+    CircularProgress,
     IconButton,
 } from '@mui/material';
 
@@ -12,7 +13,7 @@ import { Link } from 'react-router-dom';
 import AppDrawer from '../../molecule/AppDrawer';
 import ProfileIcon from '../../molecule/ProfileIcon';
 
-export default function Header({firstName}) {
+export default function Header({ firstName, loading }) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 
@@ -45,7 +46,7 @@ export default function Header({firstName}) {
                                 fontWeight: "bold",
                                 fontSize: "1.8vw"
                             }}>
-                            DriveOSx <span style={{ color: "black", fontWeight:"normal", fontSize:"1.6vw" }}>Account</span>
+                            DriveOSx <span style={{ color: "black", fontWeight: "normal", fontSize: "1.6vw" }}>Account</span>
                         </Typography>
                     </Typography>
 
@@ -62,9 +63,14 @@ export default function Header({firstName}) {
                     >
                         <AppsRoundedIcon sx={{ fontSize: '2vw' }} />
                     </IconButton>
-                    <ProfileIcon firstName={firstName}/>
+                    {loading ? (
+                        <CircularProgress size={24} />
+                    ) : (
+                        <ProfileIcon firstName={firstName} />
+                    )}
+
                 </Toolbar>
-                <AppDrawer open={open} anchorEl={anchorEl} handleClose={handleClose} handleAppClick={handleAppClick}/>
+                <AppDrawer open={open} anchorEl={anchorEl} handleClose={handleClose} handleAppClick={handleAppClick} />
             </AppBar>
         </Box>
     );
