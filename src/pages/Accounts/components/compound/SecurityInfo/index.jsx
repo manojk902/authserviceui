@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import { request } from "../../../../../utils/request";
 import { useNavigate } from "react-router-dom";
 
-const SecurityInfo = ({ recoveryEmail, isEditable, setIsEditable }) => {
+const SecurityInfo = ({ recoveryEmail, isEditable, setIsEditable, loading }) => {
     const navigate = useNavigate();
     const loginUser = useSelector((state) => state.loginUser?.loginUserData)
     // -------------------------------------------------------------------------HANDLE DEACTIVATE
@@ -145,7 +145,7 @@ const SecurityInfo = ({ recoveryEmail, isEditable, setIsEditable }) => {
                 isEditable={isEditable}
                 setIsEditable={setIsEditable}
                 rows={[
-                    { key: "recovery_email", label: "Recovery Email", type: "email", isInput: true, value: `${recoveryEmail}`, placeholder: "Recovery Email. demo@example.com", source: "user" },
+                    { key: "recovery_email", label: "Recovery Email", type: "email", isInput: true, value: `${recoveryEmail}`, placeholder: "Recovery Email. demo@example.com", source: "user", loading:  loading },
                     { label: "Reset Password", value: <>********** <Button sx={{ fontSize: ".8vw", '&:hover':{backgroundColor:"transparent"} }} onClick={handleClickOpenReset}>Change Password</Button></> },
                     { label: "Deactivate account", value: <Button color="warning" variant="outlined" onClick={handleClickOpenDeactivate}>Deactivate</Button> },
                     { label: "Delete account", value: <Button color="error" variant="contained" onClick={handleClickOpenDelete}>Delete</Button> }
