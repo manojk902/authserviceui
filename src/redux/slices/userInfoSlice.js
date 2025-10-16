@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { request } from "../../utils/request";
+import { toast } from "react-toastify";
 
 export const fetchUserInfoData = createAsyncThunk('userInfo/fetchUserInfoData', async (userId) => {
     try {
@@ -14,6 +15,7 @@ export const fetchUserInfoData = createAsyncThunk('userInfo/fetchUserInfoData', 
         return "Something went wrong, not fetched data";
     } catch (error) {
         console.error("Error fetching user info data:", error);
+        
     }
 })
 
@@ -25,11 +27,14 @@ export const updateUserInfoData = createAsyncThunk('userInfo/updateUserInfoData'
             data: updateUserInfoData
         });
         if(res.status === "success"){
+            toast.success(res.message);
             return res.userInfo;
         }
+        toast.error(res.message || "Failed to fetch user info data.");
         return "Something went wrong, not updated userInfoData data";
     } catch (error) {
         console.error("Error Updating user info data:", error);
+        toast.error(error.errors[0].message || "Error fetching user info data.");
     }
 })
 
