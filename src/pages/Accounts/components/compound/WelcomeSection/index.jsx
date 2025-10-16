@@ -5,6 +5,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import styles from './WelcomeSection.module.css';
 import { useEffect, useState } from "react";
 import { request } from "../../../../../utils/request";
+import { toast } from "react-toastify";
 
 const WelcomeSection = ({ userId, firstName, lastName, loading }) => {
     const [previewImg, setPreviewImg] = useState(ProfileImg);
@@ -35,10 +36,10 @@ const WelcomeSection = ({ userId, firstName, lastName, loading }) => {
                 } else {
                     setPreviewImg(ProfileImg);
                     setIsImageSelected(false);
-                    console.warn("No user photo found, using default.");
+                    toast.info("No user photo found, using default.");
                 }
             } catch (error) {
-                console.error("Error fetching user photo:", error);
+                toast.error("Error fetching user photo.");
             }
         };
 
@@ -67,11 +68,14 @@ const WelcomeSection = ({ userId, firstName, lastName, loading }) => {
                 setPreviewImg(URL.createObjectURL(selectedFile));
                 setIsImageSelected(false);
                 setSelectedFile(null);
+                toast.success(resData.message);
             } else {
                 console.error("Failed to update user photo:", resData.message);
+                toast.error(resData.message || "Failed to update user photo.");
             }
         } catch (error) {
             console.error("Error updating user photo:", error);
+            toast.error("Error updating user photo.");
         }
     };
 
