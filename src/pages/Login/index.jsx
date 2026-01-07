@@ -18,8 +18,8 @@ import { useDispatch } from 'react-redux';
 import { setLoginUser } from '../../redux/slices/loginUserSlice';
 
 const redirections = {
-    portfolio: ["http://localhost:3001","http://localhost:3003", "http://localhost:3004", "http://localhost:3000", "https://stage.driveosx.com","http://192.168.1.5:3003","https://portfoliodevlop.pages.dev"],
-    testingsite: ["http://localhost:3001","http://localhost:3003", "http://localhost:3004", "http://localhost:3000", "https://stage.driveosx.com","http://192.168.1.5:3003"],
+    portfolio: ["http://localhost:3001","http://localhost:3003", "http://localhost:3004", "http://localhost:3000", "https://stage.driveosx.com","http://192.168.1.5:3003","https://portfoliodevlop.pages.dev","www.mindvsmachine.in"],
+    testingsite: ["http://localhost:3001","http://localhost:3003", "http://localhost:3004", "http://localhost:3000", "https://stage.driveosx.com","http://192.168.1.5:3003","www.mindvsmachine.in"],
 };
 
 const Login = () => {
