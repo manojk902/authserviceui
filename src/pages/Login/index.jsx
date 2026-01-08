@@ -18,8 +18,8 @@ import { useDispatch } from 'react-redux';
 import { setLoginUser } from '../../redux/slices/loginUserSlice';
 
 const redirections = {
-    portfolio: ["http://localhost:3001","http://localhost:3003", "http://localhost:3004", "http://localhost:3000", "https://stage.driveosx.com","http://192.168.1.5:3003","https://portfoliodevlop.pages.dev","www.mindvsmachine.in"],
-    testingsite: ["http://localhost:3001","http://localhost:3003", "http://localhost:3004", "http://localhost:3000", "https://stage.driveosx.com","http://192.168.1.5:3003","www.mindvsmachine.in"],
+    portfolio: ["http://localhost:3001", "http://localhost:3003", "http://localhost:3004", "http://localhost:3000", "https://stage.driveosx.com", "http://192.168.1.5:3003", "https://portfoliodevlop.pages.dev", "https://www.mindvsmachine.in"],
+    testingsite: ["http://localhost:3001", "http://localhost:3003", "http://localhost:3004", "http://localhost:3000", "https://stage.driveosx.com", "http://192.168.1.5:3003", "https://www.mindvsmachine.in"],
 };
 
 const Login = () => {
@@ -89,7 +89,7 @@ const Login = () => {
                 } else {
                     toast.success(resData.message);
                     if (!getRedirectUrl) {
-                        dispatch(setLoginUser(resData.user) )
+                        dispatch(setLoginUser(resData.user))
                         navigate(`/account`)
                     } else {
                         window.location.href = `${getRedirectUrl}?token=${resData.token}`;
